@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" version="24.0.0" type="device">
+  <diagram name="Инфраструктура — Будущее 2.0" id="infra-future20">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size:18px;&quot;&gt;Диаграмма автоматизации развёртывания — «Будущее 2.0»&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;&quot;&gt;Yandex Cloud · IaaS + PaaS · Terraform · ru-central1&lt;/font&gt;"
+          style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=14;fontStyle=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="600" y="20" width="1400" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- LEGEND -->
+        <mxCell id="lg_box" value=""
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#aaaaaa;"
+          vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="290" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_title" value="&lt;b&gt;Легенда&lt;/b&gt;"
+          style="text;html=1;strokeColor=none;fillColor=none;fontSize=12;fontStyle=1;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="40" y="26" width="290" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_tf" value="Управляется Terraform (IaC)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="58" y="60" width="254" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_manual" value="Развёртывается вручную (первичная настройка)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="58" y="96" width="254" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_managed" value="Managed Service (Yandex Cloud PaaS)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="58" y="132" width="254" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="lg_net" value="Сетевой компонент (VPC / Subnet / NAT)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;"
+          vertex="1" parent="1">
+          <mxGeometry x="58" y="168" width="254" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════
+             INTERNET / EXTERNAL
+        ═══════════════════════════════════════════════ -->
+        <mxCell id="internet" value="&lt;b&gt;Интернет&lt;/b&gt;&lt;br&gt;(внешние пользователи, партнёры)"
+          style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;"
+          vertex="1" parent="1">
+          <mxGeometry x="1180" y="20" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════
+             YANDEX CLOUD REGION BOUNDARY
+        ═══════════════════════════════════════════════ -->
+        <mxCell id="yc_region" value="&lt;b&gt;Yandex Cloud · ru-central1&lt;/b&gt;"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=2;fillColor=#f0f4ff;strokeColor=#4a6fa5;fontSize=13;fontStyle=1;verticalAlign=top;spacingTop=6;dashed=1;dashPattern=10 5;"
+          vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="2520" height="1440" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════
+             VPC NETWORK
+        ═══════════════════════════════════════════════ -->
+        <mxCell id="vpc" value="&lt;b&gt;VPC: future20-dev-vpc&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_vpc_network]&lt;/i&gt;"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=2;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;verticalAlign=top;spacingTop=6;opacity=40;"
+          vertex="1" parent="1">
+          <mxGeometry x="70" y="280" width="2460" height="1360" as="geometry" />
+        </mxCell>
+
+        <!-- NAT Gateway -->
+        <mxCell id="nat_gw" value="&lt;b&gt;NAT Gateway&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_vpc_gateway]&lt;/i&gt;&lt;br&gt;Исходящий трафик из приватных подсетей"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1140" y="310" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Route Table -->
+        <mxCell id="route_table" value="&lt;b&gt;Route Table&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_vpc_route_table]&lt;/i&gt;&lt;br&gt;0.0.0.0/0 → NAT Gateway"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1400" y="310" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════
+             ZONE A — MANAGEMENT SUBNET
+        ═══════════════════════════════════════════════ -->
+        <mxCell id="subnet_mgmt" value="&lt;b&gt;Subnet: mgmt-a · 10.10.0.0/24&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_vpc_subnet] · ru-central1-a&lt;/i&gt;"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;verticalAlign=top;spacingTop=5;opacity=60;"
+          vertex="1" parent="1">
+          <mxGeometry x="100" y="450" width="420" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- Bastion Host — IaaS VM -->
+        <mxCell id="bastion_disk" value="&lt;b&gt;Boot Disk&lt;/b&gt;&lt;br&gt;&lt;i&gt;[yandex_compute_disk]&lt;/i&gt;&lt;br&gt;SSD · 20 GB"
+          style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;boundedLbl=1;backgroundOutline=1;size=12;"
+          vertex="1" parent="1">
+          <mxGeometry x="120" y="530" width="140" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bastion" value="&lt;b&gt;Bastion Host (VM)&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_compute_instance]&lt;/i&gt;&lt;br&gt;standard-v3 · 2 vCPU · 2 GB&lt;br&gt;Ubuntu 22.04 LTS&lt;br&gt;Публичный IP (NAT)"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="280" y="510" width="220" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Security Group Bastion -->
+        <mxCell id="sg_bastion" value="&lt;b&gt;SG: sg-bastion&lt;/b&gt;&lt;br&gt;&lt;i&gt;[yandex_vpc_security_group]&lt;/i&gt;&lt;br&gt;Ingress: TCP:22 from allowed CIDRs"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;align=center;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="120" y="660" width="360" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Manual: SSH key -->
+        <mxCell id="ssh_key" value="&lt;b&gt;SSH Public Key&lt;/b&gt;&lt;br&gt;Вручную: генерация ключевой пары&lt;br&gt;Значение передаётся в переменную"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="120" y="760" width="360" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════
+             ZONE A+B — APPLICATION SUBNET
+        ═══════════════════════════════════════════════ -->
+        <mxCell id="subnet_app" value="&lt;b&gt;Subnets: app-a · 10.10.1.0/24 / app-b · 10.10.2.0/24&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_vpc_subnet × 2] · ru-central1-a/b&lt;/i&gt;"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;verticalAlign=top;spacingTop=5;opacity=60;"
+          vertex="1" parent="1">
+          <mxGeometry x="560" y="450" width="940" height="760" as="geometry" />
+        </mxCell>
+
+        <!-- Kubernetes Cluster -->
+        <mxCell id="k8s_cluster" value="&lt;b&gt;Kubernetes Cluster (Regional HA)&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_kubernetes_cluster]&lt;/i&gt;&lt;br&gt;Master: Regional (ru-central1-a/b) · v1.28&lt;br&gt;STABLE channel · Auto-upgrade Sunday 03:00"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="580" y="510" width="380" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Node Group General -->
+        <mxCell id="ng_general" value="&lt;b&gt;Node Group: General&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_kubernetes_node_group]&lt;/i&gt;&lt;br&gt;standard-v3 · 4 vCPU · 8 GB · SSD 64 GB&lt;br&gt;AutoScale: 1–5 nodes · Preemptible (dev)"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="580" y="650" width="380" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Node Group AI -->
+        <mxCell id="ng_ai" value="&lt;b&gt;Node Group: AI/ML Workloads&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_kubernetes_node_group]&lt;/i&gt;&lt;br&gt;standard-v3 · 8 vCPU · 32 GB · SSD 64 GB&lt;br&gt;AutoScale: 0–3 · Taint: workload=ai:NoSchedule"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="580" y="790" width="380" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- SG K8s -->
+        <mxCell id="sg_k8s" value="&lt;b&gt;SG: sg-k8s&lt;/b&gt;&lt;br&gt;&lt;i&gt;[yandex_vpc_security_group]&lt;/i&gt;&lt;br&gt;Ingress: TCP:443 · Internal cluster traffic"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="580" y="930" width="380" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Service Account K8s -->
+        <mxCell id="sa_k8s" value="&lt;b&gt;Service Account: k8s-sa&lt;/b&gt;&lt;br&gt;&lt;i&gt;[yandex_iam_service_account]&lt;/i&gt;&lt;br&gt;Role: editor (folder)"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="580" y="1020" width="380" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Manual: K8s apps -->
+        <mxCell id="k8s_apps_manual" value="&lt;b&gt;Application Deployments&lt;/b&gt;&lt;br&gt;Вручную: Helm charts, kubectl apply&lt;br&gt;Clinic App, Fintech, AI Platform, Portal"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="580" y="1120" width="380" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- API Gateway (manual or k8s ingress) -->
+        <mxCell id="api_gw" value="&lt;b&gt;API Gateway / Ingress&lt;/b&gt;&lt;br&gt;&lt;i&gt;Вручную: Kong Helm chart в K8s&lt;/i&gt;&lt;br&gt;(Или Yandex API Gateway — отдельный ресурс)"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1000" y="510" width="480" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Load Balancer -->
+        <mxCell id="lb" value="&lt;b&gt;Network Load Balancer&lt;/b&gt;&lt;br&gt;&lt;i&gt;Вручную: создаётся K8s при деплое сервиса типа LoadBalancer&lt;/i&gt;&lt;br&gt;Публичный IP → K8s Ingress"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1000" y="630" width="480" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- DNS -->
+        <mxCell id="dns" value="&lt;b&gt;DNS Записи&lt;/b&gt;&lt;br&gt;&lt;i&gt;Вручную: настройка в регистраторе домена&lt;/i&gt;&lt;br&gt;future20.ru → LoadBalancer IP"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1000" y="750" width="480" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- SSL Certificate -->
+        <mxCell id="ssl" value="&lt;b&gt;TLS/SSL Сертификаты&lt;/b&gt;&lt;br&gt;&lt;i&gt;Вручную: cert-manager (Let's Encrypt) в K8s&lt;/i&gt;&lt;br&gt;Или Yandex Certificate Manager"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1000" y="870" width="480" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Monitoring -->
+        <mxCell id="monitoring" value="&lt;b&gt;Мониторинг и Алертинг&lt;/b&gt;&lt;br&gt;&lt;i&gt;Вручную: Grafana + Prometheus в K8s&lt;/i&gt;&lt;br&gt;(Или Yandex Monitoring — через UI)"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1000" y="990" width="480" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════
+             ZONE A+B — DATA SUBNET
+        ═══════════════════════════════════════════════ -->
+        <mxCell id="subnet_data" value="&lt;b&gt;Subnets: data-a · 10.10.3.0/24 / data-b · 10.10.4.0/24&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_vpc_subnet × 2] · ru-central1-a/b&lt;/i&gt;"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=3;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;fontStyle=1;verticalAlign=top;spacingTop=5;opacity=60;"
+          vertex="1" parent="1">
+          <mxGeometry x="1540" y="450" width="960" height="1120" as="geometry" />
+        </mxCell>
+
+        <!-- Managed Kafka -->
+        <mxCell id="kafka" value="&lt;b&gt;Managed Kafka Cluster&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_mdb_kafka_cluster]&lt;/i&gt;&lt;br&gt;v3.5 · 2 brokers (a+b) · s3-c2-m8&lt;br&gt;SSD 100 GB · Без публичного IP&lt;br&gt;ZooKeeper: 3 nodes (auto)"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1560" y="510" width="380" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Kafka Topics -->
+        <mxCell id="kafka_topics" value="&lt;b&gt;Kafka Topics (5 штук)&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_mdb_kafka_topic]&lt;/i&gt;&lt;br&gt;clinic.visit.events · fintech.payment.events&lt;br&gt;fintech.loan.events · ai.inference.results&lt;br&gt;partner.pharma.catalog"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1560" y="670" width="380" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- Kafka Users -->
+        <mxCell id="kafka_users" value="&lt;b&gt;Kafka Users (3 пользователя)&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_mdb_kafka_user]&lt;/i&gt;&lt;br&gt;clinic-producer · fintech-producer · data-consumer"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1560" y="810" width="380" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- SG Kafka -->
+        <mxCell id="sg_kafka" value="&lt;b&gt;SG: sg-kafka&lt;/b&gt;&lt;br&gt;&lt;i&gt;[yandex_vpc_security_group]&lt;/i&gt;&lt;br&gt;Ingress: TCP:9092/9093 from app subnets"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="1560" y="930" width="380" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Clinic PostgreSQL -->
+        <mxCell id="clinic_pg" value="&lt;b&gt;PostgreSQL: Домен Клиники&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_mdb_postgresql_cluster]&lt;/i&gt;&lt;br&gt;v15 · s3-c2-m8 (2 vCPU / 8 GB)&lt;br&gt;SSD 50 GB · HA: 2 hosts (a+b)&lt;br&gt;Backup: 7 дней · Без публичного IP"
+          style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;boundedLbl=1;backgroundOutline=1;size=18;"
+          vertex="1" parent="1">
+          <mxGeometry x="1980" y="510" width="480" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Fintech PostgreSQL -->
+        <mxCell id="fintech_pg" value="&lt;b&gt;PostgreSQL: Домен Финтех&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_mdb_postgresql_cluster]&lt;/i&gt;&lt;br&gt;v15 · s3-c4-m16 (4 vCPU / 16 GB)&lt;br&gt;SSD 100 GB · HA: 2 hosts (a+b)&lt;br&gt;Backup: 14 дней · Без публичного IP"
+          style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;boundedLbl=1;backgroundOutline=1;size=18;"
+          vertex="1" parent="1">
+          <mxGeometry x="1980" y="700" width="480" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- SG PostgreSQL -->
+        <mxCell id="sg_pg" value="&lt;b&gt;SG: sg-postgresql&lt;/b&gt;&lt;br&gt;&lt;i&gt;[yandex_vpc_security_group]&lt;/i&gt;&lt;br&gt;Ingress: TCP:5432 from app + mgmt subnets"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;dashed=1;"
+          vertex="1" parent="1">
+          <mxGeometry x="1980" y="880" width="480" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Object Storage — Data Lakehouse -->
+        <mxCell id="lakehouse" value="&lt;b&gt;Object Storage — Data Lakehouse&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_storage_bucket]&lt;/i&gt;&lt;br&gt;Bucket: future20-dev-lakehouse&lt;br&gt;Versioning: ON · SSE-KMS · Lifecycle: COLD после 90 дней&lt;br&gt;Структура: /domains/{clinic,fintech,ai,hq}"
+          style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;boundedLbl=1;backgroundOutline=1;size=18;"
+          vertex="1" parent="1">
+          <mxGeometry x="1560" y="1050" width="900" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Service Account Storage -->
+        <mxCell id="sa_storage" value="&lt;b&gt;Service Account: storage-sa&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_iam_service_account + static key]&lt;/i&gt;&lt;br&gt;Role: storage.admin · Static access key"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=9;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1560" y="1240" width="900" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Manual: dbt + Spark config -->
+        <mxCell id="dbt_manual" value="&lt;b&gt;dbt + Spark Jobs&lt;/b&gt;&lt;br&gt;&lt;i&gt;Вручную: деплой dbt моделей в K8s jobs&lt;/i&gt;&lt;br&gt;Трансформации Data Products по доменам"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="1560" y="1340" width="900" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- IAM Folder Bindings -->
+        <mxCell id="iam_bindings" value="&lt;b&gt;IAM Folder Bindings&lt;/b&gt;&lt;br&gt;&lt;i&gt;[Terraform: yandex_resourcemanager_folder_iam_binding]&lt;/i&gt;&lt;br&gt;k8s-sa: editor · storage-sa: storage.admin"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="100" y="880" width="420" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Terraform State -->
+        <mxCell id="tf_state" value="&lt;b&gt;Terraform State&lt;/b&gt;&lt;br&gt;&lt;i&gt;Вручную: создать bucket для remote state&lt;/i&gt;&lt;br&gt;backend &quot;s3&quot; → Yandex Object Storage&lt;br&gt;Рекомендуется DynamoDB-lock via YDB"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="100" y="990" width="420" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Terraform Config -->
+        <mxCell id="tf_config" value="&lt;b&gt;Terraform Configuration&lt;/b&gt;&lt;br&gt;&lt;i&gt;[main.tf · variables.tf · outputs.tf · terraform.tfvars]&lt;/i&gt;&lt;br&gt;Provider: yandex-cloud/yandex ~&gt; 0.95&lt;br&gt;Version: &gt;= 1.5.0"
+          style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center;"
+          vertex="1" parent="1">
+          <mxGeometry x="100" y="1110" width="420" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════════════
+             CONNECTIONS
+        ═══════════════════════════════════════════════ -->
+
+        <!-- Internet → Bastion -->
+        <mxCell id="e1" value="SSH :22"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="internet" target="bastion" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Internet → LB -->
+        <mxCell id="e2" value="HTTPS :443"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="internet" target="lb" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- NAT GW → Internet (private subnets outbound) -->
+        <mxCell id="e3" value="0.0.0.0/0"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="nat_gw" target="internet" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- LB → K8s -->
+        <mxCell id="e4" value="NodePort / ClusterIP"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="lb" target="k8s_cluster" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- K8s → Kafka -->
+        <mxCell id="e5" value="9092 (Kafka)"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="ng_general" target="kafka" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- K8s → Clinic PG -->
+        <mxCell id="e6" value="5432 (PostgreSQL)"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="ng_general" target="clinic_pg" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- K8s → Fintech PG -->
+        <mxCell id="e7" value="5432 (PostgreSQL)"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="ng_general" target="fintech_pg" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- K8s AI → Lakehouse -->
+        <mxCell id="e8" value="S3 API"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="ng_ai" target="lakehouse" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Bastion → Clinic PG (admin) -->
+        <mxCell id="e9" value="psql :5432 (admin)"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;dashed=1;"
+          edge="1" source="bastion" target="clinic_pg" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Bastion → Kafka (admin) -->
+        <mxCell id="e10" value="kafka-cli :9092"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;dashed=1;"
+          edge="1" source="bastion" target="kafka" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Kafka Topics → Lakehouse (Data Products) -->
+        <mxCell id="e11" value="Consumer → dbt → Delta Lake"
+          style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=9;fontStyle=2;"
+          edge="1" source="kafka_topics" target="lakehouse" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
